@@ -2,10 +2,10 @@
 
 use Thepsion5\Specification\AbstractSpec;
 
-class DissatisfiedSpec extends AbstractSpec
+class DissatisfiedSpec extends AbstractSpec implements SpecInterface
 {
     public function isSatisfiedBy($candidate)
     {
-        return $false;
+        return false;
     }
 }

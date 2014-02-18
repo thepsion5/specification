@@ -2,7 +2,7 @@
 
 use Thepsion5\Specification\AbstractSpec;
 
-class MessageContainerSpec extends AbstractSpec
+class MessageContainerSpec extends AbstractSpec implements SpecInterface
 {
     public function __construct(array $messages = array())
     {

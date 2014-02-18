@@ -1,5 +1,7 @@
 <?php namespace Thepsion5\Specification\Composite;
 
+use Thepsion5\Specification\SpecInterface;
+
 class NotSpec extends AbstractCompositeSpec
 {
     public function __construct(SpecInterface $spec)
@@ -14,6 +16,6 @@ class NotSpec extends AbstractCompositeSpec
 
     public function isSatisfiedBy($candidate)
     {
-        return !$this->spec->isSatisfiedBy($candidate);
+        return !$this->specs[0]->isSatisfiedBy($candidate);
     }
 }
