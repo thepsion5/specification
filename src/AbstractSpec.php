@@ -15,6 +15,7 @@ abstract class AbstractSpec implements SpecInterface
         if(!isset($this->messages[$category])) {
             $this->messages[$category] = array();
         }
+        $this->messages[$category][] = $message;
     }
 
     public abstract function isSatisfiedBy($candidate);
