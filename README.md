@@ -36,7 +36,7 @@ class SuitableForCreationSpec extends AndSpec
     {
         $this->with(new AuthorExistsSpec);
         $this->with(new RequiredDataPresentSpec);
-        $this->with(new SlugIsUniqueSpec)
+        $this->with(new SlugIsUniqueSpec);
     }
 }
 ````
@@ -54,7 +54,7 @@ public function create(array $data)
     if($spec->isSatisfiedBy($post)) {
         $post->save();
     } else {
-        $this->handleValidationFaliure($post, $spec->messages())
+        $this->handleValidationFaliure($post, $spec->messages());
     }
     return $post;
 }
