@@ -18,8 +18,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Thepsion5\\PhpSpec": "src/",
-            "Thepsion5\\PhpSpec\\Testing" : "tests/"
+            "Thepsion5\\PhpSpec\\": "src/",
+            "Thepsion5\\PhpSpec\\Testing\\" : "tests/"
         }
     },
     "minimum-stability": "dev"
