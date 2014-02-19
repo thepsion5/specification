@@ -60,6 +60,12 @@ public function create(array $data)
 }
 ````
 
+##Todo
+
+1. Code documentation
+2. More Tests
+3. Implementing additional classes for some common use-cases
+
 ##See Also
 
 http://www.martinfowler.com/apsupp/spec.pdf (PDF)
