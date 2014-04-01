@@ -5,7 +5,8 @@ I've been pondering how it might be possible to separate business logic relating
 
 ## Specification Classes
 
-The base classes consist of `AbstractSpec` and `AbstractCompositeSpec`, both of which implement `SpecInterface`. In addition, I've included simple composite classes (`AndSpec`, `OrSpec`, and `NotSpec`) for combining simple specifications to express more complex business rules. 
+The base classes consist of a simple `AssertableSpec` class for encapsulating a single specification,
+and a `CompositeAssertableSpec` class for combining multiple specifications.
 
 ## Example
 
@@ -16,13 +17,8 @@ class AuthorExistsSpec extends AbstractSpec
     /* snip */
     public function isSatisfiedBy($candidate)
     {
-        $satisfied = true;
         $author = $this->authorRepo->findById($candidate->author_id);
-        if($author->count() < 1) {
-            $satisfied = false;
-            $this->addMessage('author_id', 'Unable to find the Author with the provided ID.');
-        }
-        
+        $satisfied = ($author->count() > 0);
         return $satisfied;
     }
 }
@@ -34,9 +30,9 @@ class SuitableForCreationSpec extends AndSpec
 {
     public function __construct()
     {
-        $this->with(new AuthorExistsSpec);
-        $this->with(new RequiredDataPresentSpec);
-        $this->with(new SlugIsUniqueSpec);
+        $this->andSatisfiedBy(new AuthorExistsSpec)
+            ->andSatisfiedBy(new SlugIsUniqueSpec)
+            ->andSatisfiedBy(new HasPostAndBodySpec);
     }
 }
 ````
@@ -54,7 +50,7 @@ public function create(array $data)
     if($spec->isSatisfiedBy($post)) {
         $post->save();
     } else {
-        $this->handleValidationFaliure($post, $spec->messages());
+        $this->handleValidationFailure($post, $spec->messages());
     }
     return $post;
 }
@@ -62,9 +58,9 @@ public function create(array $data)
 
 ##Todo
 
-1. Code documentation
-2. More Tests
-3. Implementing additional classes for some common use-cases
+1. Better Code documentation
+2. Implementing additional classes for some common use-cases
+3. A simple demo
 
 ##See Also
 
