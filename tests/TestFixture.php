@@ -1,45 +1,27 @@
-<?php namespace Thepsion5\Specification\Testing;
+<?php
 
-use Mockery as M;
+use Thepsion5\Spec\AssertableSpec;
 
-class TestFixture extends \PHPUnit_Framework_TestCase {
+class TestFixture extends PHPUnit_Framework_TestCase
+{
 
-	protected function mockTrueSpec()
+    protected function stubSatisfiedSpec()
     {
-        return M::mock('Thepsion5\Specification\SpecInterface')
-            ->shouldReceive('isSatisfiedBy')
-            ->andReturn(true)
-            ->getMock();
+        return new StubSatisfiedSpec;
     }
 
-    protected function mockFalseSpec()
+    protected function stubUnsatisfiedSpec()
     {
-        return M::mock('Thepsion5\Specification\SpecInterface')
-            ->shouldReceive('isSatisfiedBy')
-            ->andReturn(false)
-            ->getMock();
+        return new StubUnsatisfiedSpec;
     }
+}
 
-    protected function mockMessageSpec(array $messages = array())
-    {
-        return M::mock('Thepsion5\Specification\SpecInterface')
-            ->shouldReceive('isSatisfiedBy')
-            ->andReturn(false)
-            ->shouldReceive('messages')
-            ->andReturn($messages)
-            ->getMock();
-    }
+class StubSatisfiedSpec extends AssertableSpec
+{
+    public function isSatisfiedBy($subject) { return true; }
+}
 
-    protected function mockCandidate(array $attrs = array())
-    {
-        return (object) $attrs;
-    }
-
-    protected function tearDown()
-    {
-        M::close();
-
-        parent::tearDown();
-    }
-
+class StubUnsatisfiedSpec extends AssertableSpec
+{
+    public function isSatisfiedBy($subject) { return false; }
 }
